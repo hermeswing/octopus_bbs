@@ -1,0 +1,37 @@
+##############################################################
+# Server port
+server:
+  servlet:
+    context-path: /
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+    session:
+      timeout: 18000                              # 30분, Default 기본단위 : 초
+      
+  tomcat:
+    uri-encoding: UTF-8                         # Spring Default : UTF-8
+##############################################################
+# -Dspring.profiles.active=local
+spring:
+  profiles:
+    include: local, dev, datasource
+
+##############################################################
+# Spring Message 처리
+  messages:
+    basename: messages/messages, messages/exception		# 각각 ResourceBundle 규칙을 따르는 쉼표로 구분된 기본 이름 목록
+    always-use-message-format: false	# 인수가 없는 메시지도 구문 분석하여 항상 MessageFormat 규칙을 적용할지 여부
+    encoding: UTF-8
+    fallback-to-system-locale: true		# locale에 해당하는 file이 없을 경우 system locale을 사용 ( default : true )
+    use-code-as-default-message: true	# 해당 코드를 찾을 수 없을 경우 Code 를 출력한다. ( default : false )
+    cache-duration: 3                 # default는 forever
+    #cache-seconds: -1					      # 로드된 자원 번들 파일 캐시 만료(초). -1로 설정하면 번들은 영원히 캐시됩니다.
+    
+##############################################################
+# Swagger pathmatch
+# spring.mvc.pathmatch.matching-strategy=ant_path_matcher
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
