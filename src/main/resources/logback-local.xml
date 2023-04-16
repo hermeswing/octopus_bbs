@@ -27,7 +27,7 @@
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <!-- 일자별 로그파일 최대 보관주기(~일), 해당 설정일 이상된 파일은 자동으로 제거 -->
-            <maxHistory>30</maxHistory>
+            <maxHistory>1</maxHistory>
         </rollingPolicy>
     </appender>
 

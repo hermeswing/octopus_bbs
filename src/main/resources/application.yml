@@ -16,7 +16,7 @@ server:
 # -Dspring.profiles.active=local
 spring:
   profiles:
-    include: local, dev, datasource
+    include: local
 
 ##############################################################
 # Spring Message 처리
