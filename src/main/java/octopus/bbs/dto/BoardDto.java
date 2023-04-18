@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import octopus.base.dto.BaseDto;
+import octopus.base.model.BaseDto;
 
 @Data
 @Builder

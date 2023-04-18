@@ -1,4 +1,4 @@
-package octopus.base.dto;
+package octopus.base.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

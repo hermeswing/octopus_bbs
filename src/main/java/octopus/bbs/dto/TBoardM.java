@@ -1,7 +1,8 @@
 package octopus.bbs.dto;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,7 +18,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import octopus.base.dto.BaseEntity;
+import octopus.base.model.BaseEntity;
 
 @Entity // jpa entity임을 알립니다.
 @Getter // getter를 자동으로 생성합니다.
@@ -52,23 +53,23 @@ public class TBoardM extends BaseEntity {
     /**
      * 게시판 Update
      */
-    public void updateBoardM(BoardDto dto) {
-        this.title    = dto.getTitle();
-        this.contents = dto.getContents();
-        this.readCnt  = dto.getReadCnt();
-    }
+    // public void updateBoardM(BoardDto dto) {
+    // this.title = dto.getTitle();
+    // this.contents = dto.getContents();
+    // this.readCnt = dto.getReadCnt();
+    // }
     
     /**
      * ID
      */
     @Id // pk
-    @Column(nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     /**
      * 제목
      */
-    @Column(nullable = false, length = 200)
+    // @Column(nullable = false, length = 200)
     private String title;
     
     /**
@@ -79,7 +80,6 @@ public class TBoardM extends BaseEntity {
     /**
      * 조회수
      */
-    @Column(length = 5)
     private Integer readCnt;
     
 }
