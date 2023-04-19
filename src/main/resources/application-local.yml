@@ -26,10 +26,10 @@ spring:
 # Spring Database 처리
   datasource:
     #sql-script-encoding: UTF-8           #spring boot 1.5.x 버전에서 사용. - Deprecated!
-    #driver-class-name: org.postgresql.Driver
-    #url: jdbc:postgresql://localhost:5432/springboot
-    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:postgresql://localhost:5432/springboot
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/springboot
+    #driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    #url: jdbc:p6spy:postgresql://localhost:5432/springboot
     username: hermeswing
     password: pass
 ##############################################################
