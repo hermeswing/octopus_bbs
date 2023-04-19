@@ -37,28 +37,6 @@ import octopus.base.model.BaseEntity;
 public class TBoardM extends BaseEntity {
     private static final long serialVersionUID = 1L;
     
-    @Builder
-    public TBoardM(Long id, String title, String contents, Integer readCnt, String crtId,
-            String mdfId) {
-        Assert.hasText(title, "Title must not be empty");
-        Assert.hasText(crtId, "crtId must not be empty");
-        Assert.hasText(mdfId, "mdfId must not be empty");
-        
-        this.id       = id;
-        this.title    = title;
-        this.contents = contents;
-        this.readCnt  = readCnt;
-    }
-    
-    /**
-     * 게시판 Update
-     */
-    // public void updateBoardM(BoardDto dto) {
-    // this.title = dto.getTitle();
-    // this.contents = dto.getContents();
-    // this.readCnt = dto.getReadCnt();
-    // }
-    
     /**
      * ID
      */
@@ -81,5 +59,27 @@ public class TBoardM extends BaseEntity {
      * 조회수
      */
     private Integer readCnt;
+
+    @Builder
+    public TBoardM(Long id, String title, String contents, Integer readCnt, String crtId,
+            String mdfId) {
+        Assert.hasText(title, "Title must not be empty");
+        Assert.hasText(crtId, "crtId must not be empty");
+        Assert.hasText(mdfId, "mdfId must not be empty");
+        
+        this.id       = id;
+        this.title    = title;
+        this.contents = contents;
+        this.readCnt  = readCnt;
+    }
+    
+    /**
+     * 게시판 Update
+     */
+    // public void updateBoardM(BoardDto dto) {
+    // this.title = dto.getTitle();
+    // this.contents = dto.getContents();
+    // this.readCnt = dto.getReadCnt();
+    // }
     
 }

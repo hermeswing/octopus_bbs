@@ -28,7 +28,7 @@ import lombok.ToString;
 @ToString
 @MappedSuperclass // BaseEntity를 상속한 Entity들은 아래의 필드들을 컬럼으로 인식한다.
 @EntityListeners(AuditingEntityListener.class) // Audting(자동으로 값 Mapping) 기능 추가
-public abstract class BaseEntity implements Serializable, Persistable<String> {
+public abstract class BaseEntity implements Serializable, Persistable<Long> {
     private static final long serialVersionUID = 1L;
     
     /* save 시 Select 날리는 것을 방지 */
