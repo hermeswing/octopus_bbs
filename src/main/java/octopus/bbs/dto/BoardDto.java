@@ -21,7 +21,23 @@ public class BoardDto extends BaseDto {
     private Integer readCnt;
     
     public TBoardM toEntity() {
-        return TBoardM.builder().title(title).contents(contents).readCnt(readCnt)
+        return TBoardM.builder().title(title).contents(contents)
+                .readCnt(readCnt)
                 .crtId(getCrtId()).mdfId(getMdfId()).build();
+    }
+    
+    public static BoardDto makeDto(TBoardM board) {
+        BoardDto dto = BoardDto.builder().id(board.getId())
+        .title(board.getTitle())
+        .contents(board.getContents())
+        .readCnt(board.getReadCnt())
+        .build();
+        
+        dto.setCrtId(board.getCrtId());
+        dto.setCrtDt(board.getCrtDt());
+        dto.setMdfId(board.getMdfId());
+        dto.setMdfDt(board.getMdfDt());
+        
+        return dto;
     }
 }

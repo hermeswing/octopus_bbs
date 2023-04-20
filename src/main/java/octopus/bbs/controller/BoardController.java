@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import octopus.base.model.ListResult;
 import octopus.base.model.SingleResult;
 import octopus.base.service.ResponseService;
 import octopus.bbs.dto.BoardDto;
@@ -28,10 +29,10 @@ public class BoardController {
         return responseService.getSingleResult(boardService.findById(id));
     }
     
-    // @GetMapping("/codes")
-    // public ListResult<BoardDto> findAllCode() {
-    // return responseService.getListResult(boardService.findAllCd());
-    // }
+    @GetMapping("/list")
+    public ListResult<BoardDto> findAll() {
+        return responseService.getListResult(boardService.findAll());
+    }
     //
     // @PostMapping("/code")
     // public SingleResult<BoardDto> save(
@@ -75,5 +76,5 @@ public class BoardController {
     // boardService.delete(dto);
     //
     // return responseService.getSingleResult(messageSourceAccessor.getMessage("msg.itIsDeleted")); // 삭제되었습니다.
-    //    }
+    // }
 }

@@ -1,6 +1,8 @@
 package octopus.bbs.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -37,19 +39,16 @@ public class BoardService {
         }
     }
     
-    // @Transactional(readOnly = true)
-    // public List<BoardDto> findAllCd() {
-    // List<BoardDto> list = boardRepository.findAll().stream()
-    // .map(data -> BoardDto.makeDto(data))
-    // .collect(Collectors.toList());
-    // // List<TCodeMDto> list = codeDRepository.findAll().stream().map(data ->
-    // // modelMapper.map(data, TCodeMDto.class))
-    // // .collect(Collectors.toList());
-    //
-    // log.debug("list :: {}", list);
-    //
-    // return list;
-    // }
+    @Transactional(readOnly = true)
+    public List<BoardDto> findAll() {
+        List<BoardDto> list = boardRepository.findAll().stream()
+                .map(data -> BoardDto.makeDto(data))
+                .collect(Collectors.toList());
+        
+        log.debug("list :: {}", list);
+        
+        return list;
+    }
     //
     // @Transactional
     // public TBoardM save(BoardDto dto) {
