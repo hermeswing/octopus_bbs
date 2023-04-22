@@ -28,7 +28,7 @@ public class BaseDto implements Serializable {
     /**
      * 생성일자
      */
-    private LocalDateTime crtDt;
+    protected LocalDateTime crtDt;
     
     /**
      * 수정자
@@ -38,6 +38,6 @@ public class BaseDto implements Serializable {
     /**
      * 수정일
      */
-    private LocalDateTime mdfDt;
+    protected LocalDateTime mdfDt;
     
 }

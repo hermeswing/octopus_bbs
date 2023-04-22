@@ -25,70 +25,61 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final ModelMapper     modelMapper;
     
-    @Transactional(readOnly = true)
+    @Transactional // 선언적 트랜잭션을 사용
     public BoardDto findById(Long id) {
         Optional<TBoardM> board = boardRepository.findById(id);
         
         log.debug("board :: {}", board.get());
         
         if (board.isPresent()) {
-            // return TBoardMDto.getDto(tCodeM.get());
+            boardRepository.updateCnt(id);
             return modelMapper.map(board.get(), BoardDto.class);
         } else {
             return new BoardDto();
         }
     }
     
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) // 선언적 트랜잭션을 사용
     public List<BoardDto> findAll() {
         List<BoardDto> list = boardRepository.findAll().stream()
-                .map(data -> BoardDto.makeDto(data))
+                .map(data -> new BoardDto(data))
                 .collect(Collectors.toList());
         
         log.debug("list :: {}", list);
         
         return list;
     }
-    //
-    // @Transactional
-    // public TBoardM save(BoardDto dto) {
-    //
-    // log.debug("dto :: {}", dto);
-    //
-    // TBoardM board = dto.toEntity();
-    //
-    // log.debug("tCodeM :: {}", board);
-    //
-    // return boardRepository.save(board);
-    // }
-    //
-    // @Transactional
-    // public int update(BoardDto dto) {
-    //
-    // log.debug("dto :: {}", dto);
-    //
-    // TBoardM board = dto.toEntity();
-    //
-    // log.debug("tCodeM :: {}", board);
-    //
-    // return boardRepository.updateTCodeM(board.getId(), board.getPCdNm());
-    // }
-    //
-    // @Transactional
-    // public void update02(BoardDto dto) {
-    // Optional<TBoardM> board = boardRepository.findById(dto.getId());
-    //
-    // log.debug("board :: {}", board.get());
-    //
-    // board.get().updateCodeM(dto);
-    // }
-    //
-    // @Transactional
-    // public void delete(BoardDto dto) {
-    // Optional<TBoardM> board = boardRepository.findById(dto.getId());
-    //
-    // log.debug("board :: {}", board.get());
-    //
-    // board.get().deleteById(board.get());
-    // }
+    
+    @Transactional
+    public BoardDto save(BoardDto dto) {
+        
+        log.debug("BoardDto :: {}", dto);
+        
+        TBoardM board = dto.toEntity();
+        
+        log.debug("tCodeM :: {}", board);
+        
+        TBoardM saveBoard = boardRepository.save(board);
+        
+        return new BoardDto(saveBoard);
+    }
+    
+    @Transactional
+    public void update(BoardDto dto) {
+
+        log.debug("BoardDto :: {}", dto);
+        
+        Optional<TBoardM> board = boardRepository.findById(dto.getId());
+        
+        log.debug("board :: {}", board.get());
+        
+        board.get().updateBoard(dto);
+    }
+    
+    @Transactional
+    public void delete(Long id) {
+        log.debug("삭제될 ID :: {}", id);
+        
+        boardRepository.deleteById(id);
+    }
 }
