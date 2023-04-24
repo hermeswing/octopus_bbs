@@ -1,4 +1,4 @@
-package octopus.config;
+package octopus.base.config;
 
 import java.util.Locale;
 import java.util.Stack;

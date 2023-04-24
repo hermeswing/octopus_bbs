@@ -1,5 +1,6 @@
 package octopus.bbs.dto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,31 +38,24 @@ import octopus.base.model.BaseEntity;
 public class TBoardM extends BaseEntity {
     private static final long serialVersionUID = 1L;
     
-    /**
-     * ID
-     */
     @Id // PK 필드임
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // ID
     
-    /**
-     * 제목
-     */
-    // @Column(nullable = false, length = 200)
-    private String title;
+    @Column(nullable = false, length = 200)
+    private String title; // 제목
     
-    /**
-     * 내용
-     */
-    private String contents;
+    @Column(name = "contents", length = 5000)
+    private String contents; // 내용
     
-    /**
-     * 조회수
-     */
-    private Integer readCnt;
-
+    private Integer readCnt; // 조회수
+    
+    @Column(length = 1)
+    private String noticeYn; // 공지여부
+    
     @Builder
-    public TBoardM(Long id, String title, String contents, Integer readCnt, String crtId,
+    public TBoardM(Long id, String title, String contents, Integer readCnt, String noticeYn,
+            String crtId,
             String mdfId) {
         Assert.hasText(title, "Title must not be empty");
         Assert.hasText(crtId, "crtId must not be empty");
@@ -71,6 +65,7 @@ public class TBoardM extends BaseEntity {
         this.title    = title;
         this.contents = contents;
         this.readCnt  = readCnt;
+        this.noticeYn = noticeYn;
         super.crtId   = crtId;
         super.mdfId   = mdfId;
     }
@@ -81,6 +76,7 @@ public class TBoardM extends BaseEntity {
     public void updateBoard(BoardDto dto) {
         this.title    = dto.getTitle();
         this.contents = dto.getContents();
+        this.noticeYn = dto.getNoticeYn();
         super.mdfId   = dto.getMdfId();
     }
     

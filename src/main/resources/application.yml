@@ -17,6 +17,8 @@ server:
 spring:
   profiles:
     include: local
+  thymeleaf:
+    cache: false
 
 ##############################################################
 # Spring Message 처리

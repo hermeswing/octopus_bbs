@@ -1,4 +1,4 @@
-package octopus.config;
+package octopus.base.config;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

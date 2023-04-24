@@ -52,14 +52,14 @@ public abstract class BaseEntity implements Serializable, Persistable<Long> {
      * @CreatedBy // implements AuditorAware<Long>를 구현한 Class를 생성해야 한다.
      */
     // private String crtId;
-    @Column(updatable = false)
+    @Column(name = "crt_id", nullable = false, updatable = false)
     protected String crtId;
     
     /**
      * 생성일자 : Entity가 생성되어 저장될 때 시간이 자동 저장된다.
      */
     @CreatedDate
-    @Column(updatable = false)
+    @Column(name = "crt_dt", nullable = false, updatable = false)
     protected LocalDateTime crtDt;
     
     /**
@@ -68,12 +68,14 @@ public abstract class BaseEntity implements Serializable, Persistable<Long> {
      * @LastModifiedBy // implements AuditorAware<Long>를 구현한 Class를 생성해야 한다.
      */
     // private String mdfId;
+    @Column(name = "mdf_id")
     protected String mdfId;
     
     /**
      * 수정일자 : Entity가 생성되어 저장될 때 시간이 자동 저장된다.
      */
     @LastModifiedDate
+    @Column(name = "mdf_dt")
     protected LocalDateTime mdfDt;
     
 }

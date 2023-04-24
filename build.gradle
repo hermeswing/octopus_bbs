@@ -21,8 +21,6 @@ repositories {
 dependencies {
     // Default : 2.7.10
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	//implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	//implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     // Default : 2.0.0.RELEASE
@@ -33,6 +31,9 @@ dependencies {
 	
 	// jpa query logging
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
+	
+	// Thymeleaf Layout
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

@@ -9,6 +9,5 @@ import lombok.Setter;
 @Setter
 public class ListResult<T> extends CommonResult {
 	private List<T> list;
-
 	// private CollectionModel<T> collection;
 }

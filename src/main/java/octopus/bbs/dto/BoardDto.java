@@ -21,6 +21,7 @@ public class BoardDto extends BaseDto {
     private String  title;
     private String  contents;
     private Integer readCnt;
+    private String  noticeYn; // 공지여부
     
     public TBoardM toEntity() {
         return TBoardM.builder().title(title).contents(contents)
@@ -32,6 +33,7 @@ public class BoardDto extends BaseDto {
         this.title    = board.getTitle();
         this.contents = board.getContents();
         this.readCnt  = board.getReadCnt();
+        this.noticeYn = board.getNoticeYn();
         super.crtId   = board.getCrtId();
         super.crtDt   = board.getCrtDt();
         super.mdfId   = board.getMdfId();
