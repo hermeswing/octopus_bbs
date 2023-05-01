@@ -1,4 +1,4 @@
-package octopus.bbs.dto;
+package octopus.bbs.posts.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

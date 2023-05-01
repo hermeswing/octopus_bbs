@@ -2,6 +2,7 @@ package octopus.base.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -24,4 +25,12 @@ public class BaseDto implements Serializable {
     protected LocalDateTime crtDt; // 생성일자
     protected String        mdfId; // 수정자
     protected LocalDateTime mdfDt; // 수정일
+    
+    protected String createDate; // 생성일자
+    protected String modifyDate; // 수정일
+    
+    public void parseDate(LocalDateTime crtDt, LocalDateTime mdfDt) {
+        this.createDate = crtDt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.modifyDate = mdfDt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
 }

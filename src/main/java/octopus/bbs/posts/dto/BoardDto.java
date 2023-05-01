@@ -1,4 +1,6 @@
-package octopus.bbs.dto;
+package octopus.bbs.posts.dto;
+
+import javax.persistence.Convert;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import octopus.base.converter.BooleanToYNConverter;
 import octopus.base.model.BaseDto;
 
 @Data
@@ -21,7 +24,9 @@ public class BoardDto extends BaseDto {
     private String  title;
     private String  contents;
     private Integer readCnt;
-    private String  noticeYn; // 공지여부
+    
+    @Convert(converter = BooleanToYNConverter.class)
+    private Boolean noticeYn; // 공지여부
     
     public TBoardM toEntity() {
         return TBoardM.builder().title(title).contents(contents)

@@ -1,6 +1,7 @@
-package octopus.bbs.dto;
+package octopus.bbs.comment.dto;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import octopus.base.converter.BooleanToYNConverter;
 import octopus.base.model.BaseEntity;
 
 @Getter // getter를 자동으로 생성합니다.
@@ -34,38 +36,30 @@ import octopus.base.model.BaseEntity;
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" }) // Post Entity에서 User와의 관계를 Json으로 변환시 오류 방지를 위한 코드
 @Proxy(lazy = false)
 @Entity // jpa entity임을 선언. 실제 DB의 테이블과 매칭될 Class
-@Table(name = "T_BOARD_M")
-public class TBoardM extends BaseEntity {
+@Table(name = "T_COMMENT_M")
+public class TCommentM extends BaseEntity {
     private static final long serialVersionUID = 1L;
     
     @Id // PK 필드임
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // ID
+    private Long id; // Comment ID
     
-    @Column(nullable = false, length = 200)
-    private String title; // 제목
+    @Column(nullable = false)
+    private Long postId; // 상위 게시물 ID
     
-    @Column(name = "contents", length = 5000)
+    @Column(nullable = false)
     private String contents; // 내용
     
-    private Integer readCnt; // 조회수
-    
-    @Column(length = 1)
-    private String noticeYn; // 공지여부
-    
     @Builder
-    public TBoardM(Long id, String title, String contents, Integer readCnt, String noticeYn,
+    public TCommentM(Long id, Long postId, String contents,
             String crtId,
             String mdfId) {
-        Assert.hasText(title, "Title must not be empty");
         Assert.hasText(crtId, "crtId must not be empty");
         Assert.hasText(mdfId, "mdfId must not be empty");
         
         this.id       = id;
-        this.title    = title;
+        this.postId   = postId;
         this.contents = contents;
-        this.readCnt  = readCnt;
-        this.noticeYn = noticeYn;
         super.crtId   = crtId;
         super.mdfId   = mdfId;
     }
@@ -73,10 +67,9 @@ public class TBoardM extends BaseEntity {
     /**
      * 게시판 Update
      */
-    public void updateBoard(BoardDto dto) {
-        this.title    = dto.getTitle();
+    public void updateComment(CommentDto dto) {
+        this.postId   = dto.getPostId();
         this.contents = dto.getContents();
-        this.noticeYn = dto.getNoticeYn();
         super.mdfId   = dto.getMdfId();
     }
     

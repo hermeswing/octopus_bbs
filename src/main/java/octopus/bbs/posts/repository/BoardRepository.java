@@ -1,10 +1,10 @@
-package octopus.bbs.repository;
+package octopus.bbs.posts.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import octopus.bbs.dto.TBoardM;
+import octopus.bbs.posts.dto.TBoardM;
 
 // @Repository : JpaRepository를 사용하면 @Repository를 사용하지 않아도 됨.
 public interface BoardRepository extends JpaRepository<TBoardM, Long> {

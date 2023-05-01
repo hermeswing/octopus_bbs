@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PostLoad;
@@ -17,6 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Getter;
 import lombok.ToString;
+import octopus.base.converter.LocalDateTimeToStringConverter;
 
 /**
  * <pre>
@@ -61,7 +63,7 @@ public abstract class BaseEntity implements Serializable, Persistable<Long> {
     @CreatedDate
     @Column(name = "crt_dt", nullable = false, updatable = false)
     protected LocalDateTime crtDt;
-    
+
     /**
      * 수정자
      * 
@@ -77,5 +79,5 @@ public abstract class BaseEntity implements Serializable, Persistable<Long> {
     @LastModifiedDate
     @Column(name = "mdf_dt")
     protected LocalDateTime mdfDt;
-    
+
 }

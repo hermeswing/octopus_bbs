@@ -57,7 +57,7 @@
 
                 <!--/* 버튼 */-->
                 <p class="btn_set tr">
-                    <a th:href="@{/post/write.do}" class="btns btn_st3 btn_mid">글쓰기</a>
+                    <a th:href="@{/posts/write}" class="btns btn_st3 btn_mid">글쓰기</a>
                 </p>
             </section>
         </div> <!--/* .content */-->
@@ -138,7 +138,7 @@
                     html += `
                         <tr>
                             <td><input type="checkbox" /></td>
-                            <td>${row.noticeYn === 'N' ? num-- : '공지'}</td>
+                            <td>${row.noticeYn === false ? num-- : '공지'}</td>
                             <td class="tl"><a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a></td>
                             <td>${row.crtId}</td>
                             <td>${dayjs(row.createdDate).format('YYYY-MM-DD HH:mm')}</td>
@@ -215,7 +215,7 @@
                 }
 
                 /*
-                 * 3. location.pathname : 리스트 페이지의 URI("/post/list.do")를 의미
+                 * 3. location.pathname : 리스트 페이지의 URI("/posts/list")를 의미
                  *    new URLSearchParams(queryParams).toString() : queryParams의 모든 프로퍼티(key-value)를 쿼리 스트링으로 변환
                  *    URI + 쿼리 스트링에 해당하는 주소로 이동
                  *    (해당 함수가 리턴해주는 값을 브라우저 콘솔(console)에 찍어보시면 쉽게 이해하실 수 있습니다.)
@@ -227,7 +227,7 @@
             // 게시글 상세 페이지로 이동
             function goViewPage(id) {
                 const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
-                location.href = '/post/view.do' + queryString;
+                location.href = '/posts/view' + queryString;
             }
 
         /*]]>*/

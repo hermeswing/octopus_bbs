@@ -14,7 +14,7 @@
             <section>
                 <form id="saveForm" method="post" autocomplete="off">
                     <!--/* 게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK) */-->
-                    <input type="hidden" id="id" name="id" th:if="${post != null}" th:value="${post.id}" />
+                    <input type="hidden" id="id" name="id" th:if="${result != null}" th:value="${result.id}" />
 
                     <!--/* 서버로 전달할 공지글 여부 */-->
                     <input type="hidden" id="noticeYn" name="noticeYn" />
@@ -28,7 +28,7 @@
                                 <td><span class="chkbox"><input type="checkbox" id="isNotice" name="isNotice" class="chk" /><i></i><label for="isNotice"> 설정</label></span></td>
 
                                 <th scope="row">등록일</th>
-                                <td colspan="3"><input type="text" id="createdDate" name="createdDate" readonly /></td>
+                                <td colspan="3"><input type="text" id="createDate" name="createDate" readonly /></td>
                             </tr>
 
                             <tr>
@@ -38,12 +38,12 @@
 
                             <tr>
                                 <th>이름 <span class="es">필수 입력</span></th>
-                                <td colspan="3"><input type="text" id="writer" name="writer" maxlength="10" placeholder="이름을 입력해 주세요." /></td>
+                                <td colspan="3"><input type="text" id="crtId" name="crtId" maxlength="10" placeholder="이름을 입력해 주세요." /></td>
                             </tr>
 
                             <tr>
                                 <th>내용 <span class="es">필수 입력</span></th>
-                                <td colspan="3"><textarea id="content" name="content" cols="50" rows="10" placeholder="내용을 입력해 주세요."></textarea></td>
+                                <td colspan="3"><textarea id="contents" name="contents" cols="50" rows="10" placeholder="내용을 입력해 주세요."></textarea></td>
                             </tr>
                         </tbody>
                     </table>
@@ -67,17 +67,18 @@
 
             // 게시글 상세정보 렌더링
             function renderPostInfo() {
-                const post = [[ ${post} ]];
-
+                const post = [[ ${result} ]];
+//console.log(post);
                 if ( !post ) {
                     initCreatedDate();
                     return false;
                 }
 
                 const form = document.getElementById('saveForm');
-                const fields = ['id', 'title', 'content', 'writer', 'noticeYn'];
+                const fields = ['id', 'title', 'contents', 'crtId', 'noticeYn'];
                 form.isNotice.checked = post.noticeYn;
-                form.createdDate.value = dayjs(post.createdDate).format('YYYY-MM-DD HH:mm');
+                //form.createDate.value = dayjs(post.createDate).format('YYYY-MM-DD HH:mm');
+                form.createDate.value = post.createDate;
 
                 fields.forEach(field => {
                     form[field].value = post[field];
@@ -87,14 +88,14 @@
 
             // 등록일 초기화
             function initCreatedDate() {
-                document.getElementById('createdDate').value = dayjs().format('YYYY-MM-DD');
+                document.getElementById('createDate').value = dayjs().format('YYYY-MM-DD');
             }
 
 
             // 게시글 저장(수정)
             function savePost() {
                 const form = document.getElementById('saveForm');
-                const fields = [form.title, form.writer, form.content];
+                const fields = [form.title, form.crtId, form.contents];
                 const fieldNames = ['제목', '이름', '내용'];
 
                 for (let i = 0, len = fields.length; i < len; i++) {
@@ -111,7 +112,8 @@
 
                 document.getElementById('saveBtn').disabled = true;
                 form.noticeYn.value = form.isNotice.checked;
-                form.action = [[ ${post == null} ]] ? '/post/save.do' : '/post/update.do';
+                form.action = [[ ${result == null} ]] ? '/posts/save' : '/posts/update';
+                form.method = 'post';
                 form.submit();
             }
 
@@ -120,7 +122,7 @@
             function goListPage() {
                 const queryString = new URLSearchParams(location.search);
                 queryString.delete('id');
-                location.href = '/post/list.do' + '?' + queryString.toString();
+                location.href = '/posts/list' + '?' + queryString.toString();
             }
 
         /*]]>*/

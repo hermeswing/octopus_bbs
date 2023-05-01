@@ -35,6 +35,9 @@ dependencies {
 	// Thymeleaf Layout
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	
+	// jackson-databind
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'

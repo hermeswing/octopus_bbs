@@ -1,10 +1,13 @@
 package octopus.base.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import octopus.base.model.CommonResult;
 import octopus.base.model.ListResult;
@@ -15,6 +18,20 @@ public class ResponseService {
     
     @Autowired
     private MessageSourceAccessor messageSourceAccessor;
+    
+    // 쿼리 스트링 파라미터를 Map에 담아 반환
+    private Map<String, Object> queryParamsToMap(final Object queryParams) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+        // Map<String, Object> data = new HashMap<>();
+        // data.put("page", queryParams.getPage());
+        // data.put("recordSize", queryParams.getRecordSize());
+        // data.put("pageSize", queryParams.getPageSize());
+        // data.put("keyword", queryParams.getKeyword());
+        // data.put("searchType", queryParams.getSearchType());
+        
+        return objectMapper.convertValue(queryParams, Map.class);
+    }
     
     // 단일건 결과를 처리하는 메소드
     public <T> SingleResult<T> getSingleResult(T data) {
@@ -48,6 +65,16 @@ public class ResponseService {
         result.setSuccess(true);
         result.setCode(0);
         result.setMsg(messageSourceAccessor.getMessage("msg.ok")); // 정상처리되었습니다.
+        
+        return result;
+    }
+    
+    // 성공 결과만 처리하는 메소드
+    public CommonResult getSuccessResult(String message) {
+        CommonResult result = new CommonResult();
+        result.setSuccess(true);
+        result.setCode(0);
+        result.setMsg(message);
         
         return result;
     }
