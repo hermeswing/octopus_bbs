@@ -1,4 +1,4 @@
-package octopus.basic;
+package octopus.basic.comm.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

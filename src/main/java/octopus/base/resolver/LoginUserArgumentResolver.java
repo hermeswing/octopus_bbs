@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import octopus.base.anotation.LoginUser;
 import octopus.base.model.UserSessionDto;
+import octopus.basic.user.dto.UserDto;
+import octopus.basic.user.service.UserService;
 
 /**
  * <pre>
@@ -25,6 +27,7 @@ import octopus.base.model.UserSessionDto;
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
     
     private final HttpSession session;
+    private final UserService userService;
     
     /**
      * Parameter가 @LoginUser Annotation이고, UserSessionDto Type이면..
@@ -62,7 +65,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
             // TODO Session 객체가 없음. Redis 에서 사용자의 정보를 가져와야 할 지도..
             // TODO 사용자 정보를 Return 한다.
             // UserSessionDto userDto = (UserSessionDto) session.getAttribute("user");
-            UserSessionDto userDto = UserSessionDto.builder().userId("admin").userNm("어드민").build();
+            UserDto userDto = userService.findById("admin");
             
             log.debug("userDto :: {}", userDto);
             

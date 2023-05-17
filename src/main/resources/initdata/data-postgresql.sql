@@ -1,3 +1,14 @@
+COMMENT on column T_USER_M.ID is 'ID';
+COMMENT on column T_USER_M.USER_ID is '사용자 ID';
+COMMENT on column T_USER_M.USER_NM is '사용자명';
+COMMENT on column T_USER_M.CRT_ID is '생성자ID';
+COMMENT on column T_USER_M.CRT_DT is '생성일시';
+COMMENT on column T_USER_M.MDF_ID is '수정자ID';
+COMMENT on column T_USER_M.MDF_DT is '수정일시';
+
+INSERT INTO T_USER_M(USER_ID, USER_NM, CRT_ID, CRT_DT, MDF_ID, MDF_DT) VALUES ('admin', '어드민', 'admin', NOW(), 'admin', NOW());
+INSERT INTO T_USER_M(USER_ID, USER_NM, CRT_ID, CRT_DT, MDF_ID, MDF_DT) VALUES ('hong', '홍길동', 'admin', NOW(), 'admin', NOW());
+
 COMMENT on column T_BOARD_M.ID is 'ID';
 COMMENT on column T_BOARD_M.TITLE is '제목';
 COMMENT on column T_BOARD_M.CONTENTS is '내용';

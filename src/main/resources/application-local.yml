@@ -8,7 +8,7 @@ spring:
   config.activate.on-profile: local
   devtools:
     livereload:
-      enabled: true
+      enabled: false
 
   jpa:
     open-in-view: false

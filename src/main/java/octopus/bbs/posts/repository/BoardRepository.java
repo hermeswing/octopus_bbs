@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import octopus.bbs.posts.dto.TBoardM;
 
+//https://hackids.tistory.com/129 참조
+//
 // @Repository : JpaRepository를 사용하면 @Repository를 사용하지 않아도 됨.
 public interface BoardRepository extends JpaRepository<TBoardM, Long> {
     String UPDATE_CNT = "UPDATE TBoardM a" +
