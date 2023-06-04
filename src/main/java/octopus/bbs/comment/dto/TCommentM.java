@@ -69,7 +69,7 @@ public class TCommentM extends BaseEntity {
      */
     public void updateComment(CommentDto dto) {
         this.postId   = dto.getPostId();
-        this.contents = dto.getContents();
+        this.contents = dto.getContents() == null ? dto.getModalContent() : dto.getContents();
         super.mdfId   = dto.getMdfId();
     }
     

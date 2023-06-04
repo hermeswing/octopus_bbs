@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -68,10 +67,12 @@ public class ComentController {
     public CommentDto saveComment(@PathVariable final Long postId,
             final CommentDto dto, @LoginUser UserSessionDto userDto) {
         
+        log.debug("userDto :: {}", userDto);
+        
         dto.setCrtId(userDto.getUserId());
         dto.setMdfId(userDto.getUserId());
         
-        log.debug("BoardDto :: {}", dto);
+        log.debug("CommentDto :: {}", dto);
         
         CommentDto saveComment = commentService.saveComment(dto);
         return saveComment;
@@ -80,10 +81,14 @@ public class ComentController {
     // 기존 댓글 수정
     @PostMapping("/posts/{postId}/comments/{id}")
     public CommentDto updateComment(@PathVariable final Long postId, @PathVariable final Long id,
-            @RequestBody final CommentDto dto, @LoginUser UserSessionDto userDto) {
+            final CommentDto dto, @LoginUser UserSessionDto userDto) {
+        
+        log.debug("userDto :: {}", userDto);
+        log.debug("postId :: {}", postId);
+        log.debug("id :: {}", id);
         
         dto.setMdfId(userDto.getUserId());
-        log.debug("BoardDto :: {}", dto);
+        log.debug("CommentDto :: {}", dto);
         
         commentService.updateComment(dto);
         return commentService.findCommentById(id);

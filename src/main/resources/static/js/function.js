@@ -80,7 +80,9 @@ function callApi(uri, method, params) {
             json = response;
         },
         error : function (request, status, error) {
-            console.log(error)
+            console.log("request :: ", request);
+            console.log("status :: ", status);
+            console.log("error :: ", error);
         }
     })
 

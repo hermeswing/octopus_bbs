@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import octopus.basic.user.dto.UserDto;
 
 @Data
 @Builder
@@ -18,4 +19,9 @@ public class UserSessionDto implements Serializable {
 
 	private String userId;
 	private String userNm;
+	
+    public UserSessionDto(UserDto user) {
+        this.userId = user.getUserId();
+        this.userNm = user.getUserNm();
+    }
 }

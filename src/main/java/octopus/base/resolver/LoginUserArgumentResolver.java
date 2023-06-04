@@ -69,7 +69,9 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
             
             log.debug("userDto :: {}", userDto);
             
-            return userDto;
+            UserSessionDto sessionDto = new UserSessionDto(userDto);
+            
+            return sessionDto;
         } else {
             return null;
         }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import octopus.basic.user.dto.TUserM;
 import octopus.basic.user.dto.UserDto;
 import octopus.basic.user.repository.UserRepository;
 
@@ -22,8 +23,8 @@ public class UserService {
      */
     public UserDto findById(final String userId) {
         
-        UserDto dto = userRepository.findByUserId(userId);
-        
+        TUserM user = userRepository.findByUserId(userId);
+        UserDto dto = new UserDto(user);
         log.debug("dto :: {}", dto);
         
         return dto;
