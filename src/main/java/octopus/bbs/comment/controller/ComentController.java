@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -81,13 +82,18 @@ public class ComentController {
     // 기존 댓글 수정
     @PostMapping("/posts/{postId}/comments/{id}")
     public CommentDto updateComment(@PathVariable final Long postId, @PathVariable final Long id,
-            final CommentDto dto, @LoginUser UserSessionDto userDto) {
+            @RequestBody CommentDto dto, @LoginUser UserSessionDto userDto) {
         
         log.debug("userDto :: {}", userDto);
-        log.debug("postId :: {}", postId);
-        log.debug("id :: {}", id);
         
-        dto.setMdfId(userDto.getUserId());
+        // json -> List
+        // String json = params.get("list").toString();
+        // ObjectMapper mapper = new ObjectMapper();
+        // List list = mapper.readValue(json, new TypeReference<List<Map<String, Object>>>(){});
+        
+        // json -> DTO
+        // List<DTO> list = mapper.readValue(json, new TypeReference<ArrayList<DTO>>(){});
+        
         log.debug("CommentDto :: {}", dto);
         
         commentService.updateComment(dto);
