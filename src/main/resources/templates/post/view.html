@@ -118,7 +118,7 @@
                     postId : postId,
                 }
 //console.log("params :: ", params);
-                const response = getJson(uri, params);
+                const response = _api.getJson(uri, params);
                 const pagination = response.pagination;
                 drawComments(response.list);
                 drawPage(pagination, page);
@@ -134,19 +134,16 @@
                     return false;
                 }
 
-                $.ajax({
-                    url : `/posts/id/${id}`,
-                    type : 'delete',
-                    dataType : 'json',
-                    async : false,
-                    success : function (result) {
-                        alert(result.msg);
-                        goListPage();
-                    },
-                    error : function (request, status, error) {
-                        console.log(error)
-                    }
-                })
+                // _api.call(url, params, method, returnType, 실행전수행할함수, 성공callback함수, 실패callback함수);
+                _api.call(`/posts/id/${id}`, null, 'delete', 'json', null, function(request, status, error) {
+                    alert(request.msg);
+                    goListPage();
+                }, function(request, status, error) {
+                	console.log("request :: ", request);
+                	const result = request.responseJSON == null ? JSON.parse(request.responseText) : request.responseJSON;
+                	//console.log("result.msg :: ", result.msg);
+                	alert(result.msg);
+                });
             }
 
 
@@ -187,31 +184,19 @@
                     contents : contents.value,
                     writer : '홍길동'
                 }
-//console.log(params);
 
-                $.ajax({
-                    url : `/posts/${postId}/comments`,
-                    type : 'post',
-                    //contentType : 'application/json; charset=utf-8',
-                    //dataType : 'json',
-                    //data : JSON.stringify(params),
-                    dataType : 'text',
-                    data : params,
-                    async : false,
-                    success : function (result) {
-                        alert('저장되었습니다.');
-                        contents.value = '';
-                        document.getElementById('counter').innerText = '0/300자';
-                        findAllComment(1);
-                    },
-                    error : function (request, status, error) {
-                    	//console.log("request :: ", request);
-                    	const result = request.responseJSON == null ? JSON.parse(request.responseText) : request.responseJSON;
-                    	//console.log("result.msg :: ", result.msg);
-                    	alert(result.msg);
-                        //console.log("status :: ", status);
-                        //console.log("error :: ", error);
-                    }
+                console.log("params :: ", params);
+                // _api.call(url, params, method, returnType, 실행전수행할함수, 성공callback함수, 실패callback함수);
+                _api.call(`/posts/${postId}/comments`, params, 'post', 'json', null, function(request, status, error) {
+                    alert('저장되었습니다.');
+                    contents.value = '';
+                    document.getElementById('counter').innerText = '0/300자';
+                    findAllComment(1);
+                }, function(request, status, error) {
+                	console.log("request :: ", request);
+                	const result = request.responseJSON == null ? JSON.parse(request.responseText) : request.responseJSON;
+                	//console.log("result.msg :: ", result.msg);
+                	alert(result.msg);
                 });
             }
 
@@ -222,7 +207,7 @@
                 const postId = [[ ${result.id} ]];
 				
                 const uri = `/posts/${postId}/comments/${id}`;
-                const result = getJson(uri);
+                const result = _api.getJson(uri);
                 document.getElementById('modalWriter').value = result.crtId;
                 document.getElementById('modalContent').value = result.contents;
                 document.getElementById('commentUpdateBtn').setAttribute('onclick', `updateComment(${id})`);
@@ -272,8 +257,8 @@
                 }
 				
                 console.log("params :: ", params);
-                // _api.call(url, params, method, returnType, 실행전수행할함수명, 성공callback함수명, 실패callback함수명);
-                _api.call(`/posts/${postId}/comments/${id}`, params, 'post', 'json', null, function() {
+                // _api.call(url, params, method, returnType, 실행전수행할함수, 성공callback함수, 실패callback함수);
+                _api.call(`/posts/${postId}/comments/${id}`, params, 'post', 'json', null, function(request, status, error) {
                 	alert('수정되었습니다.');
                     closeCommentUpdatePopup();
                     findAllComment();
@@ -292,7 +277,7 @@
                     return false;
                 }
                 const postId = [[ ${result.id} ]];
-                // _api.call(url, params, method, returnType, 실행전수행할함수명, 성공callback함수명, 실패callback함수명);
+                // _api.call(url, params, method, returnType, 실행전수행할함수, 성공callback함수, 실패callback함수);
                 _api.call(`/posts/${postId}/comments/${id}`, params, 'delete', 'json', null, function() {
                 	alert('삭제되었습니다.');
                     findAllComment();
@@ -341,7 +326,8 @@
                 // 1. 필수 파라미터가 없는 경우, 페이지네이션 HTML을 제거한 후 로직 종료
                 if ( !pagination || !page ) {
                     document.querySelector('.paging').innerHTML = '';
-                    throw new Error('Missing required parameters...');
+                    //throw new Error('Missing required parameters...');
+                    return false;
                 }
 
                 // 2. 페이지네이션 HTML을 그릴 변수

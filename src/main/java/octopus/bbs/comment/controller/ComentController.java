@@ -36,9 +36,7 @@ public class ComentController {
      */
     @GetMapping("/posts/{postId}/all")
     public ListResult<CommentDto> findAllComment(@PathVariable final Long postId) {
-        
         List<CommentDto> list = commentService.findAllComment(postId);
-        
         return responseService.getListResult(list);
     }
     

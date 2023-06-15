@@ -1,41 +1,68 @@
 package octopus.bbs.comment.dto;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import octopus.base.model.BaseDto;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
 @Builder
-@EqualsAndHashCode(callSuper = true) // true의 경우 부모 클래스 필드 값들도 동일한지 체크하며, false(기본값)일 경우 자신 클래스의 필드 값만 고려한다.
-public class CommentDto extends BaseDto {
-    private static final long serialVersionUID = 1L;
-    
+public class CommentDto {
     private Long   id;
     private Long   postId;
     private String contents;
     
+    private String crtNm;
+    private String mdfNm;
+    
     private String modalWriter;
     private String modalContent;
+    
+    private String        crtId; // 생성자
+    private LocalDateTime crtDt; // 생성일자
+    private String        mdfId; // 수정자
+    private LocalDateTime mdfDt; // 수정일
+    
+    private String createDate; // 생성일자
+    private String modifyDate; // 수정일
+    
+    public void parseDate(LocalDateTime crtDt, LocalDateTime mdfDt) {
+        this.createDate = crtDt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.modifyDate = mdfDt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
     
     public TCommentM toEntity() {
         return TCommentM.builder().postId(postId).contents(contents)
                 .crtId(getCrtId()).mdfId(getMdfId()).build();
     }
     
+    public CommentDto(Long id, Long postId, String contents 
+            , String crtId, String crtNm, LocalDateTime crtDt
+            , String mdfId, String mdfNm, LocalDateTime mdfDt ) {
+        this.id       = id;
+        this.postId   = postId;
+        this.contents = contents;
+        this.crtId    = crtId;
+        this.crtNm    = crtNm;
+        this.mdfId    = mdfId;
+        this.mdfNm    = mdfNm;
+        parseDate(crtDt, mdfDt);
+    }
+    
     public CommentDto(TCommentM comment) {
         this.id       = comment.getId();
         this.postId   = comment.getPostId();
         this.contents = comment.getContents();
-        super.crtId   = comment.getCrtId();
-        super.crtDt   = comment.getCrtDt();
-        super.mdfId   = comment.getMdfId();
-        super.mdfDt   = comment.getMdfDt();
+        this.crtId    = comment.getCrtId();
+        this.crtDt    = comment.getCrtDt();
+        this.mdfId    = comment.getMdfId();
+        this.mdfDt    = comment.getMdfDt();
     }
 }

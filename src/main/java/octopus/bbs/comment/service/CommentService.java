@@ -1,10 +1,12 @@
 package octopus.bbs.comment.service;
 
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.Tuple;
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
@@ -39,11 +41,23 @@ public class CommentService {
      */
     public List<CommentDto> findAllComment(final Long postId) {
         
-        List<CommentDto> list = commentRepository.findAllByPostId(postId);
+        List<Tuple>      tupleComments = commentRepository.findAllByPostId(postId);
+        List<CommentDto> comments      = tupleComments.stream()
+                .map(t -> new CommentDto(
+                        Long.valueOf(t.get(0, Integer.class)),
+                        Long.valueOf(t.get(1, Integer.class)),
+                        t.get(2, String.class),
+                        t.get(3, String.class),
+                        t.get(4, String.class),
+                        (t.get(5, Timestamp.class)).toLocalDateTime(),
+                        t.get(6, String.class),
+                        t.get(7, String.class),
+                        (t.get(8, Timestamp.class)).toLocalDateTime()))
+                .collect(Collectors.toList());
         
-        log.debug("list :: {}", list);
+        log.debug("comments :: {}", comments);
         
-        return list;
+        return comments;
     }
     
     /**

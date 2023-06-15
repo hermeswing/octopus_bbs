@@ -1,14 +1,18 @@
 package octopus.bbs.posts.service;
 
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.Tuple;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 import octopus.base.config.ModelMapperConfig;
 import octopus.base.model.Pagination;
 import octopus.base.model.PagingListResult;
+import octopus.bbs.comment.dto.CommentDto;
+import octopus.bbs.comment.repository.CommentRepository;
 import octopus.bbs.posts.dto.BoardDto;
 import octopus.bbs.posts.dto.BoardSearchDto;
 import octopus.bbs.posts.dto.TBoardM;
@@ -31,6 +37,7 @@ public class BoardService {
     // private CodeDRepository codeDRepository;
     
     private final BoardRepository   boardRepository;
+    private final CommentRepository commentRepository;
     private final ModelMapperConfig modelMapperConfig;
     
     @Transactional // 선언적 트랜잭션을 사용
@@ -182,9 +189,32 @@ public class BoardService {
     }
     
     @Transactional
-    public void delete(Long id) {
-        log.debug("삭제될 ID :: {}", id);
+    public void delete(Long postId) {
         
-        boardRepository.deleteById(id);
+        log.debug("삭제될 ID :: {}", postId);
+        
+        List<Tuple>      tupleComments = commentRepository.findAllByPostId(postId);
+        List<CommentDto> comments      = tupleComments.stream()
+                .map(t -> new CommentDto(
+                        Long.valueOf(t.get(0, Integer.class)),
+                        Long.valueOf(t.get(1, Integer.class)),
+                        t.get(2, String.class),
+                        t.get(3, String.class),
+                        t.get(4, String.class),
+                        (t.get(5, Timestamp.class)).toLocalDateTime(),
+                        t.get(6, String.class),
+                        t.get(7, String.class),
+                        (t.get(8, Timestamp.class)).toLocalDateTime()))
+                .collect(Collectors.toList());
+        
+        log.debug("comments :: {}", comments);
+        log.debug("comments.size() :: {}", comments.size());
+        
+        if (comments.size() > 0) {
+            commentRepository.deleteByPostId(postId);
+        }
+        
+        boardRepository.deleteById(postId);
+        
     }
 }

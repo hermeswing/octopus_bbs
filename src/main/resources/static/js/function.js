@@ -30,32 +30,7 @@ function isValid(target, fieldName, focusTarget) {
 }
 
 
-/**
- * 데이터 조회
- * @param uri - API Request URI
- * @param params - Parameters
- * @returns json - 결과 데이터
- */
-function getJson(uri, params) {
 
-	let json = {}
-
-	$.ajax({
-		url: uri,
-		type: 'get',
-		dataType: 'json',
-		data: params,
-		async: false,
-		success: function(response) {
-			json = response;
-		},
-		error: function(request, status, error) {
-			console.log(error)
-		}
-	})
-
-	return json;
-}
 
 
 /**
@@ -127,24 +102,59 @@ var _api = {
 				_api.showLoader();
 			}
 		}).done(function(result, textStatus, xhr) {
-			if (success) success(result)
+			//console.log("success");
+			if (success) success(result);
 		}).fail(function(result, textStatus, xhr) {
-			if (failure) failure(result)
+			//console.log("failure");
+			if (failure) failure(result);
 		}).always(function(result, textStatus, xhr) {
 			// Implement code here that you want to run whenever the call is complete regardless of success or failure.
 			_api.hideLoader();
 		});
 
 	},
+	// 데이터 조회 시만 사용하는 Function
+	getJson : function(uri, params) {
+		let json = {}
+	
+		$.ajax({
+			url: uri,
+			type: 'get',
+			dataType: 'json',
+			data: params,
+			async: false,
+			success: function(response) {
+				json = response;
+			},
+			error: function(request, status, error) {
+				console.log(error);
+			}
+		});
+	
+		return json;
+	},
+	// Progress Icon을 보여줍니다.
 	showLoader:function() {
 		//console.log("showLoader");
 		loaderContainer.style.display = 'block';
 	},
+	// Progress Icon을 지워줍니다.
 	hideLoader:function() {
 		//console.log("hideLoader");
 		loaderContainer.style.display = 'none';
 	}
 }
+/**
+ * 데이터 조회
+ * @param uri - API Request URI
+ * @param params - Parameters
+ * @returns json - 결과 데이터
+ */
+function getJson() {
+
+
+}
+
 /* loading icon 을 안보이게 한다. */
 window.addEventListener('load', () => {
 	// loaderContainer.style.display = 'none';
