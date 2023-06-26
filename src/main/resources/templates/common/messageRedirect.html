@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: main-head"></head>
+    <head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	
+	    <th:block layout:fragment="title"></th:block>
+	
+	    <link rel="stylesheet" th:href="@{/css/default.css}" />
+	    <link rel="stylesheet" th:href="@{/css/common.css}" />
+	    <link rel="stylesheet" th:href="@{/css/content.css}" />
+	    <link rel="stylesheet" th:href="@{/css/button.css}" />
+    </head>
 <body>
     <form th:if="${not #maps.isEmpty( params.data )}" id="redirectForm" th:action="${params.redirectUri}" th:method="${params.method}" style="display: none;">
         <input th:each="key, status : ${params.data.keySet()}" type="hidden" th:name="${key}" th:value="${params.data.get(key)}" />

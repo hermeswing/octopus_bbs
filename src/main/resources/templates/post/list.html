@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
-    <th:block layout:fragment="title">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/basic}">
+    <head>
         <title>리스트 페이지</title>
-    </th:block>
+    </head>
 
     <th:block layout:fragment="content">
         <div class="page_tits">
@@ -63,8 +63,7 @@
         </div> <!--/* .content */-->
     </th:block>
 
-
-        <th:block layout:fragment="script">
+    <th:block layout:fragment="script">
         <script th:inline="javascript">
         /*<![CDATA[*/
 
